@@ -10,49 +10,12 @@ import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs
 import { NativeBaseProvider } from 'native-base';
 
 import Pokemons from './Components/Pokemons';
+import welcomeScreen from './Components/welcomeScreen';
 
 const Stack = createStackNavigator();
-const Tab = createMaterialTopTabNavigator();
 
-const TabNavigator = () => {
-  return (
-    <Tab.Navigator
-      initialRouteName="Pokemons"
-      tabBarPosition="bottom"
-      tabBarOptions={{
-        style: {
-          marginHorizontal: 7,
-          paddingBottom: 10,
-          shadowOpacity: 0,
-          shadowOffset: {
-            height: 0,
-            width: 0,
-          },
-          elevation: 0,
-          shadowRadius: 0,
-          
-        },
-        indicatorStyle: {
-          backgroundColor: 'darkgreen',
-          marginBottom: 5,
-          width: '5%',
-          marginLeft: '10%',
-        },
-        labelStyle: {
-          fontSize: 12,
-        },
-        activeTintColor: 'darkgreen',
-        inactiveTintColor: 'grey'
-      }}>
-      <Tab.Screen name="All" component={Pokemons} />
-      <Tab.Screen name="Food" component={Pokemons} />
-      <Tab.Screen name="Movies" component={Pokemons} />
-      <Tab.Screen name="Shop" component={Pokemons} />
-      <Tab.Screen name="Travel" component={Pokemons} />
-      {/* <Tab.Screen name="Items" component={Pokemons} /> */}
-    </Tab.Navigator>
-  );
-};
+
+
 
 
 
@@ -61,38 +24,10 @@ export default function App() {
   return (
     <NativeBaseProvider>
     <NavigationContainer>
-      <Stack.Navigator>
-      <Stack.Screen
-          name="Home"
-          component={TabNavigator}
-          options={({navigation}) => ({
-            headerStyle: {
-              backgroundColor: 'black',
-            },
-            
-            headerRight: () =>  <View style={styles.headerRight}>
-            <TouchableOpacity>
-            {/* <Image
-        source={require('./Components/assets/IconToogle.png')}
-      /> */}
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{ marginLeft: 10 }}
-              // onPress={playgroundNavigate}
-            >
-              {/* <Image
-        source={require('./Components/assets/Profile.png')}
-      /> */}
-            </TouchableOpacity>
-          </View>,
-         
-          })}
-        />
-        <Stack.Screen
-          name=" "
-          component={Pokemons}
-        />
-      </Stack.Navigator>
+    <Stack.Navigator>
+      <Stack.Screen name=" " component={welcomeScreen} />
+      <Stack.Screen name="Pokemons" component={Pokemons} />
+    </Stack.Navigator>
     </NavigationContainer>
     </NativeBaseProvider>
   );

@@ -17,7 +17,7 @@ import { getPokemonsRequest } from '../actions/pokemons';
 
 const Pokemons = props => {
 
-    const { getPokemonsRequest, pokemons } = props;
+    const { getPokemonsRequest, pokemons, loading } = props;
     const {
         isOpen,
         onOpen,
@@ -28,6 +28,18 @@ const Pokemons = props => {
     useEffect(() => {
       getPokemonsRequest();
     }, [getPokemonsRequest]);
+
+      // Condition when Fetch
+      if (props.pokemons.loading) {
+        console.log('loading')
+        return (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                <ActivityIndicator size="large" color="#26D27F" />
+            </View>
+        );
+    } else {
+      console.log('nggak udaah ')
+    }
 
 
    
@@ -66,17 +78,27 @@ const Pokemons = props => {
                               </TouchableOpacity>
                             );
                         })}
-                        <Actionsheet isOpen={isOpen} onClose={onClose}>
-        <Actionsheet.Content>
-        <Text style={{paddingVertical: 20}}>
-          Some random content
-        </Text>
-        </Actionsheet.Content>
-      </Actionsheet>
- 
                 </View>
             </ScrollView>
-        </View>
+
+            {/* //modal bottom// */}
+            <Actionsheet isOpen={isOpen} onClose={onClose}>
+        <Actionsheet.Content>
+        <Text style={styles.nameTitleModal}>{"POKEMON NAME"}</Text>
+        <Image
+                                  style={styles.thumb}
+                                  source={{ uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/bulbasaur.png` }}
+                                />
+                                <Text style={styles.nameDescription}>{"Weight :"}    {"9999"}</Text>
+                                <Text style={styles.nameDescription}>{" Height :"} {"999"}</Text>
+                                <Text style={styles.nameDescription}>{"Abilities :"} {"Abilities 1"}</Text>
+                                <Text style={styles.nameDescription}>{"Type:"}</Text>
+                                <Button onPress={() => navigation.navigate('Pokemons')} colorScheme="emerald">More Detail</Button>
+                                
+        </Actionsheet.Content>
+        
+      </Actionsheet>
+      </View>
     );
 };
 
@@ -92,82 +114,7 @@ export default connect(
 
 
 const styles = StyleSheet.create({
-    //style
-    // card: {
-    //     backgroundColor: 'white',
-    //     borderRadius: 16,
-    //     shadowOpacity: 0.2,
-    //     shadowRadius: 4,
-    //     shadowColor: 'black',
-    //     shadowOffset: {
-    //         height: 0,
-    //         width: 0,
-    //     },
-    //     elevation: 1,
-    //     marginVertical: 13,
-    //     flexDirection: 'row',
-    //     marginHorizontal: 30,
-    //     // width: 350,
-    //     height: 450,
-    // },
-    // thumb: {
-    // //     borderTopLeftRadius: 16,
-    // //     borderBottomLeftRadius: 16,
-    // //     width: '40%',
-    // height: 260,
-    // borderTopLeftRadius: 46,
-    // borderTopRightRadius: 46,
-    // width: '100%',
-    // },
-    // infoContainer: {
-    //     padding: 16,
-    // },
-    // name: {
-    //     fontSize: 16,
-    //     fontWeight: 'bold',
-    //     // alignItems: 'flex-start',
-    //     // justifyContent: 'center'
-    // },
-    // discount: {
-    //     fontSize: 25,
-    //     fontWeight: 'bold',
-    //     marginTop: 15,
-    //     alignItems: 'flex-start',
-    //     justifyContent: 'center',
-    //     color: '#26D27F'
-
-    // },
-    // tukarkan: {
-    //     fontSize: 12,
-    //     fontWeight: 'bold',
-    //     justifyContent: 'center',
-    //     textAlign: 'center',
-    //     color: 'white'
-
-    // },
-
-    // header: {
-    //     fontSize: 26,
-    //     fontWeight: 'bold',
-    //     justifyContent: 'center',
-    //     textAlign: 'center',
-    //     color: 'black'
-
-    // },
-    // promo: {
-    //     fontSize: 10,
-    //     fontWeight: 'bold',
-    //     marginTop: 15,
-    //     alignItems: 'flex-start',
-    //     justifyContent: 'center',
-    //     color: '#868788'
-    // },
-    // price: {
-    //     fontSize: 16,
-    //     fontWeight: '600',
-    //     marginBottom: 8,
-    // },
-
+ 
     card: {
         backgroundColor: 'white',
         borderRadius: 16,
@@ -196,9 +143,38 @@ const styles = StyleSheet.create({
         fontSize: 22,
         fontWeight: 'bold',
       },
+      nameTitleModal: {
+        fontSize: 22,
+        fontWeight: 'bold',
+        paddingHorizontal: 8,
+        paddingVertical: 6,
+        alignSelf: 'flex-start',
+        marginHorizontal: '1%',
+        marginBottom: 6,
+        minWidth: '48%',
+        textAlign: 'center',
+        // width: '50%'  
+      },
+      nameDescription: {
+        fontSize: 20,
+        fontWeight: 'bold',
+        paddingHorizontal: 8,
+        paddingVertical: 6,
+        alignSelf: 'flex-start',
+        marginHorizontal: 15,
+        marginBottom: 6,
+        // minWidth: '48%',
+        textAlign: 'center',
+      },
+      nameValue: {
+        fontSize: 20,
+      },
       price: {
         fontSize: 16,
         fontWeight: '600',
         marginBottom: 8,
+      },
+      item: {
+        width: '50%' // is 50% of container width
       },
 });
