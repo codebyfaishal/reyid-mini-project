@@ -8,41 +8,29 @@ import {
     TouchableOpacity,
     StyleSheet,
     ActivityIndicator,
+    FlatList
 } from 'react-native';
 import axios from 'axios';
-import { Button } from "native-base";
+import { Button, Actionsheet, useDisclose } from "native-base";
+import { connect } from 'react-redux';
+import { getPokemonsRequest } from '../actions/pokemons';
 
 const Pokemons = props => {
-    const [coupons, setCoupons] = useState([]);
-    const [loading, setLoading] = useState(true);
+
+    const { getPokemonsRequest, pokemons } = props;
+    const {
+        isOpen,
+        onOpen,
+        onClose
+      } = useDisclose();
+    console.log('props', props)
 
     useEffect(() => {
-        fetchCoupons();
-    }, []);
+      getPokemonsRequest();
+    }, [getPokemonsRequest]);
 
 
-
-    // Fetch Index
-    const fetchCoupons = async () => {
-        setLoading(true);
-        try {
-            const { data: response } = await axios.get('https://user1673281842743.requestly.dev/getCoupon');
-            setCoupons(response.result);
-        } catch (error) {
-            //   console.error(error.message);
-        }
-        setLoading(false);
-    }
-
-
-    // Condition when Fetch
-    if (loading) {
-        return (
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <ActivityIndicator size="large" color="#26D27F" />
-            </View>
-        );
-    }
+   
 
     return (
         <View>
@@ -55,31 +43,53 @@ const Pokemons = props => {
                     marginTop: 15,
                 }}>
                 </View>
-                {/* <View style={styles.container}> */}
+                
 
-                    {coupons
-                        .map((coupon, index) => {
+                <View style={styles.container}>
+
+                    {pokemons.items
+                        .map((pokemon, index) => {
                             return (
 
 
-                                <TouchableOpacity style={styles.card}>
+                                <TouchableOpacity onPress={onOpen} key={index} style={styles.card}>
                                 <Image
                                   style={styles.thumb}
-                                  source={{ uri: coupon.couponBrandLogo }}
+                                  source={{ uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/${
+                                    pokemon.name
+                                  }.png` }}
                                 />
                                 <View style={styles.infoContainer}>
-                                  <Text style={styles.name}>{"POKE NAME"}</Text>
+                                <Text style={styles.name}>{pokemon.name}</Text>
+                                  <Text style={styles.name}>{pokemon.name}</Text>
                                 </View>
                               </TouchableOpacity>
                             );
                         })}
-                {/* </View> */}
+                        <Actionsheet isOpen={isOpen} onClose={onClose}>
+        <Actionsheet.Content>
+        <Text style={{paddingVertical: 20}}>
+          Some random content
+        </Text>
+        </Actionsheet.Content>
+      </Actionsheet>
+ 
+                </View>
             </ScrollView>
         </View>
     );
 };
 
-export default Pokemons;
+// export default Pokemons;
+
+export default connect(
+    ({ pokemons }) => ({ pokemons }),
+    {
+      getPokemonsRequest
+    }
+  )(Pokemons);
+
+
 
 const styles = StyleSheet.create({
     //style
