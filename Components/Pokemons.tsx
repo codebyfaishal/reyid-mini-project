@@ -94,13 +94,13 @@ const Pokemons = props => {
       />
                   <Actionsheet isOpen={isModalVisible} disableOverlay={true}>
         <Actionsheet.Content>
-        <Text style={styles.nameTitleModal}>{"POKEMON NAME"}</Text>
+        <Text style={styles.nameTitleModal}>{"bulbasaur"}</Text>
         <Image
                                   style={styles.thumb}
                                   source={{ uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/bulbasaur.png` }}
                                 />
                                 <Text style={styles.nameDescription}>{"Weight :"}    {"69"}</Text>
-                                <Text style={styles.nameDescription}>{" Height :"}   {"7"}</Text>
+                                <Text style={styles.nameDescription}>{"Height :"}   {"7"}</Text>
                                 <Text style={styles.nameDescription}>{"Abilities :"}  {"overgrow"}</Text>
                                 <Text style={styles.nameDescription}>{"Type:"} </Text>
                                 <Button onPress={handleDecline} colorScheme="emerald">More Detail</Button>
@@ -170,7 +170,7 @@ export default connect(
         paddingHorizontal: 8,
         paddingVertical: 6,
         alignSelf: 'flex-start',
-        marginHorizontal: 15,
+        marginHorizontal: 30,
         marginBottom: 6,
         // minWidth: '48%',
         textAlign: 'center',

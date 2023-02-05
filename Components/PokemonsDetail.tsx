@@ -4,13 +4,13 @@ import { Dimensions, View, Text, Image, StyleSheet, ScrollView, TouchableHighlig
 export default function PokemonsDetail() {
   return (
     <ScrollView>
-         <Text style={styles.nameTitleModal}>{"POKEMON NAME"}</Text>
+         <Text style={styles.nameTitleModal}>{"bulbasaur"}</Text>
            <Image
                                   style={styles.thumb}
                                   source={{ uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/bulbasaur.png` }}
                                 />
                                 <Text style={styles.nameDescription}>{"Weight :"}    {"69"}</Text>
-                                <Text style={styles.nameDescription}>{" Height :"}   {"7"}</Text>
+                                <Text style={styles.nameDescription}>{"Height :"}   {"7"}</Text>
                                 <Text style={styles.nameDescription}>{"Abilities :"}  {"overgrow"}</Text>
                                 <Text style={styles.nameDescription}>{"Type:"} </Text>
                                 <Text style={styles.nameDescription}>{"Other Images:"} </Text>
