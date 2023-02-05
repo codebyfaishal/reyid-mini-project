@@ -11,6 +11,7 @@ import { NativeBaseProvider } from 'native-base';
 
 import Pokemons from './Components/Pokemons';
 import welcomeScreen from './Components/welcomeScreen';
+import PokemonsDetail from './Components/PokemonsDetail';
 
 const Stack = createStackNavigator();
 
@@ -26,7 +27,17 @@ export default function App() {
     <NavigationContainer>
     <Stack.Navigator>
       <Stack.Screen name=" " component={welcomeScreen} />
-      <Stack.Screen name="Pokemons" component={Pokemons} />
+      <Stack.Screen name="  " component={Pokemons} options={{ 
+      headerLeft: (props) => ( // App Logo
+      <Image
+        style={{ width: 200, height: 40 }}
+        source={require('./Components/assets/pokemonLogo.png')}
+        resizeMode='contain'
+      />
+    ),
+    headerTitleStyle: { flex: 1, textAlign: 'center' },
+    }} />
+      <Stack.Screen name="Pokemons Detail" component={PokemonsDetail} />
     </Stack.Navigator>
     </NavigationContainer>
     </NativeBaseProvider>

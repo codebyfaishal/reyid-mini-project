@@ -3,13 +3,16 @@ import React, { useState, useEffect } from 'react';
 import {
     View,
     Text,
-    ScrollView,
+    // ScrollView,
     Image,
     TouchableOpacity,
     StyleSheet,
     ActivityIndicator,
-    FlatList
+    // FlatList,
+    SafeAreaView,
+    StatusBar
 } from 'react-native';
+import { ScrollView, FlatList } from 'react-native-gesture-handler';
 import axios from 'axios';
 import { Button, Actionsheet, useDisclose } from "native-base";
 import { connect } from 'react-redux';
@@ -17,13 +20,17 @@ import { getPokemonsRequest } from '../actions/pokemons';
 
 const Pokemons = props => {
 
-    const { getPokemonsRequest, pokemons, loading } = props;
+    const { getPokemonsRequest, pokemons, loading, navigation } = props;
     const {
         isOpen,
         onOpen,
         onClose
       } = useDisclose();
-    console.log('props', props)
+    // console.log('props', props)
+    const [selectedId, setSelectedId] = useState();
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    console.log('isModalVisible', isModalVisible)
+    console.log('setIsModalVisible', setIsModalVisible)
 
     useEffect(() => {
       getPokemonsRequest();
@@ -31,74 +38,83 @@ const Pokemons = props => {
 
       // Condition when Fetch
       if (props.pokemons.loading) {
-        console.log('loading')
         return (
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <ActivityIndicator size="large" color="#26D27F" />
             </View>
         );
-    } else {
-      console.log('nggak udaah ')
-    }
+    } 
+   
+
+    const handleDecline = () => setIsModalVisible(() => props.navigation.navigate("Pokemons Detail"));
+
+    const handleModal = () => setIsModalVisible(() => !isModalVisible);
+
+
+
+    
+
+
+    
+    const Item = ({name, onPress}) => (
+      // <TouchableOpacity onPress={onPress} style={[styles.item, {backgroundColor}]}>
+      //   <Text style={[styles.title, {color: textColor}]}>{name}</Text>
+      // </TouchableOpacity>
+      <TouchableOpacity onPress={handleModal} style={styles.card}>
+      <Image
+        style={styles.thumb}
+        source={{ uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/${
+         name
+        }.png` }}
+      />
+      <View style={styles.infoContainer}>
+      <Text style={styles.name}>{name}</Text>
+      </View>
+    </TouchableOpacity>
+    );
+
+    
+
+    const renderItem = ({item}) => {
+
+      return (
+        <Item
+          name={item.name}
+          onPress={() => setSelectedId(item.name)}
+        />
+        
+      );
+    };
+    
 
 
    
 
     return (
-        <View>
-            <ScrollView>
-                <View style={{
-                    paddingVertical: 11,
-
-                    width: '100%',
-                    borderRadius: 3,
-                    marginTop: 15,
-                }}>
-                </View>
-                
-
-                <View style={styles.container}>
-
-                    {pokemons.items
-                        .map((pokemon, index) => {
-                            return (
-
-
-                                <TouchableOpacity onPress={onOpen} key={index} style={styles.card}>
-                                <Image
-                                  style={styles.thumb}
-                                  source={{ uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/${
-                                    pokemon.name
-                                  }.png` }}
-                                />
-                                <View style={styles.infoContainer}>
-                                <Text style={styles.name}>{pokemon.name}</Text>
-                                  <Text style={styles.name}>{pokemon.name}</Text>
-                                </View>
-                              </TouchableOpacity>
-                            );
-                        })}
-                </View>
-            </ScrollView>
-
-            {/* //modal bottom// */}
-            <Actionsheet isOpen={isOpen} onClose={onClose}>
+      <SafeAreaView style={styles.container}>
+      <FlatList
+        data={pokemons.items}
+        renderItem={renderItem}
+        keyExtractor={item => item.name}
+        extraData={selectedId}
+      />
+                  <Actionsheet isOpen={isModalVisible} onClose={onClose}>
         <Actionsheet.Content>
         <Text style={styles.nameTitleModal}>{"POKEMON NAME"}</Text>
         <Image
                                   style={styles.thumb}
                                   source={{ uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/bulbasaur.png` }}
                                 />
-                                <Text style={styles.nameDescription}>{"Weight :"}    {"9999"}</Text>
-                                <Text style={styles.nameDescription}>{" Height :"} {"999"}</Text>
-                                <Text style={styles.nameDescription}>{"Abilities :"} {"Abilities 1"}</Text>
-                                <Text style={styles.nameDescription}>{"Type:"}</Text>
-                                <Button onPress={() => navigation.navigate('Pokemons')} colorScheme="emerald">More Detail</Button>
+                                <Text style={styles.nameDescription}>{"Weight :"}    {"69"}</Text>
+                                <Text style={styles.nameDescription}>{" Height :"}   {"7"}</Text>
+                                <Text style={styles.nameDescription}>{"Abilities :"}  {"overgrow"}</Text>
+                                <Text style={styles.nameDescription}>{"Type:"} </Text>
+                                <Button onPress={handleDecline} colorScheme="emerald">More Detail</Button>
                                 
         </Actionsheet.Content>
         
       </Actionsheet>
-      </View>
+    </SafeAreaView>
     );
 };
 
@@ -113,7 +129,7 @@ export default connect(
 
 
 
-const styles = StyleSheet.create({
+  const styles = StyleSheet.create({
  
     card: {
         backgroundColor: 'white',
@@ -127,7 +143,7 @@ const styles = StyleSheet.create({
         },
         elevation: 1,
         marginVertical: 20,
-        height: 450,
+        height: 350,
         marginHorizontal: 50
       },
       thumb: {

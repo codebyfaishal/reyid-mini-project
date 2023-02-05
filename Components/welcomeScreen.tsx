@@ -17,7 +17,7 @@ function welcomeScreen({ navigation }) {
                                 />
                                 <Text style={styles.title}>All the Pokémon data you'll ever need in one place!</Text>
                                 <Text style={styles.title2}>Thousand of data compiled into one place</Text>
-                                <Button onPress={() => navigation.navigate('Pokemons')} style={styles.button} colorScheme="emerald">
+                                <Button onPress={() => navigation.navigate('  ')} style={styles.button} colorScheme="emerald">
             Check Pokèdex
           </Button>
     </View>
