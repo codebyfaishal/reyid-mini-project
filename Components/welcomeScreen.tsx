@@ -1,16 +1,11 @@
 import * as React from 'react';
 import {  View, Text, Image, StyleSheet} from 'react-native';
 import { Button } from "native-base";
-import { color } from 'native-base/lib/typescript/theme/styled-system';
+
 
 function welcomeScreen({ navigation }) {
   return (
     <View >
-      {/* <Text>Home Screen</Text>
-      <Button
-        title="Go to Pokemons"
-        onPress={() => navigation.navigate('Pokemons')}
-      /> */}
               <Image
                                   style={styles.thumb}
                                   source={require('./assets/welcomeImage.png')}

@@ -6,7 +6,6 @@ import { Text, View, StyleSheet, Button, Image, TouchableOpacity } from 'react-n
 import { NavigationContainer } from '@react-navigation/native';
 
 import { createStackNavigator } from '@react-navigation/stack';
-import {createMaterialTopTabNavigator} from '@react-navigation/material-top-tabs';
 import { NativeBaseProvider } from 'native-base';
 
 import Pokemons from './Components/Pokemons';

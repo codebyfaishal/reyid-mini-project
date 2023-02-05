@@ -3,17 +3,15 @@ import React, { useState, useEffect } from 'react';
 import {
     View,
     Text,
-    // ScrollView,
     Image,
     TouchableOpacity,
     StyleSheet,
     ActivityIndicator,
-    // FlatList,
     SafeAreaView,
     StatusBar
 } from 'react-native';
 import { ScrollView, FlatList } from 'react-native-gesture-handler';
-import axios from 'axios';
+
 import { Button, Actionsheet, useDisclose } from "native-base";
 import { connect } from 'react-redux';
 import { getPokemonsRequest } from '../actions/pokemons';
@@ -45,9 +43,8 @@ const Pokemons = props => {
         );
     } 
    
-
+//Handle Button
     const handleDecline = () => setIsModalVisible(() => props.navigation.navigate("Pokemons Detail"));
-
     const handleModal = () => setIsModalVisible(() => !isModalVisible);
 
 
@@ -55,11 +52,8 @@ const Pokemons = props => {
     
 
 
-    
+    //buat komponen item
     const Item = ({name, onPress}) => (
-      // <TouchableOpacity onPress={onPress} style={[styles.item, {backgroundColor}]}>
-      //   <Text style={[styles.title, {color: textColor}]}>{name}</Text>
-      // </TouchableOpacity>
       <TouchableOpacity onPress={handleModal} style={styles.card}>
       <Image
         style={styles.thumb}
@@ -74,7 +68,7 @@ const Pokemons = props => {
     );
 
     
-
+//render komponen item
     const renderItem = ({item}) => {
 
       return (
@@ -118,7 +112,6 @@ const Pokemons = props => {
     );
 };
 
-// export default Pokemons;
 
 export default connect(
     ({ pokemons }) => ({ pokemons }),
