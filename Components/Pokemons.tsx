@@ -170,7 +170,7 @@ export default connect(
         paddingHorizontal: 8,
         paddingVertical: 6,
         alignSelf: 'flex-start',
-        marginHorizontal: 30,
+        marginHorizontal: 25,
         marginBottom: 6,
         // minWidth: '48%',
         textAlign: 'center',

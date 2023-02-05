@@ -277,7 +277,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8,
         paddingVertical: 6,
         alignSelf: 'flex-start',
-        marginHorizontal: 15,
+        marginHorizontal: 25,
         marginBottom: 6,
         // minWidth: '48%',
         textAlign: 'center',
