@@ -92,7 +92,7 @@ const Pokemons = props => {
         keyExtractor={item => item.name}
         extraData={selectedId}
       />
-                  <Actionsheet isOpen={isModalVisible} onClose={onClose}>
+                  <Actionsheet isOpen={isModalVisible} disableOverlay={true}>
         <Actionsheet.Content>
         <Text style={styles.nameTitleModal}>{"POKEMON NAME"}</Text>
         <Image
