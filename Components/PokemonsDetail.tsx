@@ -1,9 +1,9 @@
 // Aboutscreen.js
 import React, { Component } from "react";
-import { Button, View, Text, Image, StyleSheet } from "react-native";
+import { Dimensions, View, Text, Image, StyleSheet, ScrollView, TouchableHighlight } from "react-native";
 export default function PokemonsDetail() {
   return (
-    <View>
+    <ScrollView>
          <Text style={styles.nameTitleModal}>{"POKEMON NAME"}</Text>
            <Image
                                   style={styles.thumb}
@@ -13,8 +13,219 @@ export default function PokemonsDetail() {
                                 <Text style={styles.nameDescription}>{" Height :"}   {"7"}</Text>
                                 <Text style={styles.nameDescription}>{"Abilities :"}  {"overgrow"}</Text>
                                 <Text style={styles.nameDescription}>{"Type:"} </Text>
-                                <Text style={styles.nameDescription}>{"Others Image:"} </Text>
+                                <Text style={styles.nameDescription}>{"Other Images:"} </Text>
+
+                                <View style={styles.row}>
+                                    <Image
+                                  style={styles.thumbOther}
+                                  source={{ uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/bulbasaur.png` }}
+                                />
+  <Image
+                                  style={styles.thumbOther}
+                                  source={{ uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/bulbasaur.png` }}
+                                />
+                                  <Image
+                                  style={styles.thumbOther}
+                                  source={{ uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/bulbasaur.png` }}
+                                />
+                                    <Image
+                                  style={styles.thumbOther}
+                                  source={{ uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/bulbasaur.png` }}
+                                />
+  <Image
+                                  style={styles.thumbOther}
+                                  source={{ uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/bulbasaur.png` }}
+                                />
+                                  <Image
+                                  style={styles.thumbOther}
+                                  source={{ uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/bulbasaur.png` }}
+                                />
+      </View>
+
+      {/* //STATS */}
+      <Text style={styles.nameDescription}>{"Stats:"} </Text>
+      <View style={styles.row}>
+      <View
+      style = {{
+        borderRadius: Math.round(Dimensions.get('window').width + Dimensions.get('window').height) / 2,
+        width: 100,
+        height: 100,
+        borderWidth: 5,
+        borderColor: '#FBC02D',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}
+      
+
+    >
+      <Text> 67 </Text>
+      <Text> Stat 1 </Text>
     </View>
+    <View
+      style = {{
+        borderRadius: Math.round(Dimensions.get('window').width + Dimensions.get('window').height) / 2,
+        width: 100,
+        height: 100,
+        borderWidth: 5,
+        borderColor: '#F8BBD0',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}
+      
+
+    >
+            <Text> 67 </Text>
+      <Text> Stat 1 </Text>
+    </View>
+    <View
+      style = {{
+        borderRadius: Math.round(Dimensions.get('window').width + Dimensions.get('window').height) / 2,
+        width: 100,
+        height: 100,
+        borderWidth: 5,
+        borderColor: '#689F38',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}
+      
+
+    >
+            <Text> 67 </Text>
+      <Text> Stat 1 </Text>
+    </View>
+    <View
+      style = {{
+        borderRadius: Math.round(Dimensions.get('window').width + Dimensions.get('window').height) / 2,
+        width: 100,
+        height: 100,
+        borderWidth: 5,
+        borderColor: '#f00',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginVertical: 10
+      }}
+
+
+    >
+           <Text> 67 </Text>
+      <Text> Stat 1 </Text>
+    </View>
+    <View
+      style = {{
+        borderRadius: Math.round(Dimensions.get('window').width + Dimensions.get('window').height) / 2,
+        width: 100,
+        height: 100,
+        borderWidth: 5,
+        borderColor: '#1E88E5',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginVertical: 10
+      }}
+
+    >
+            <Text> 67 </Text>
+      <Text> Stat 1 </Text>
+    </View>
+    <View
+      style = {{
+        borderRadius: Math.round(Dimensions.get('window').width + Dimensions.get('window').height) / 2,
+        width: 100,
+        height: 100,
+        borderWidth: 5,
+        borderColor: '#9575CD',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginVertical: 10
+      }}
+    //   underlayColor = '#ccc'
+
+    >
+           <Text> 67 </Text>
+      <Text> Stat 1 </Text>
+    </View>
+      </View>
+
+      {/* // EVOLUTIONS */}
+      <Text style={styles.nameDescription}>{"Evolution:"} </Text>
+      <View style={styles.row}>
+      <View
+      style = {{
+        borderRadius: Math.round(Dimensions.get('window').width + Dimensions.get('window').height) / 2,
+        width: 150,
+        height: 150,
+        borderWidth: 5,
+        borderColor: '#FBC02D',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}
+      
+
+    >
+        <Image
+                                  style={styles.thumbEvo}
+                                  source={{ uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/bulbasaur.png` }}
+                                />
+    </View>
+    <View
+      style = {{
+        borderRadius: Math.round(Dimensions.get('window').width + Dimensions.get('window').height) / 2,
+        width: 150,
+        height: 150,
+        borderWidth: 5,
+        borderColor: '#F8BBD0',
+        justifyContent: 'center',
+        alignItems: 'center'
+      }}
+      
+
+    >
+        <Image
+                                  style={styles.thumbEvo}
+                                  source={{ uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/bulbasaur.png` }}
+                                />
+    </View>
+    <View
+      style = {{
+        borderRadius: Math.round(Dimensions.get('window').width + Dimensions.get('window').height) / 2,
+        width: 150,
+        height: 150,
+        borderWidth: 5,
+        borderColor: '#689F38',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginVertical: 10
+      }}
+      
+
+    >
+             <Image
+                                  style={styles.thumbEvo}
+                                  source={{ uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/bulbasaur.png` }}
+                                />
+    </View>
+    <View
+      style = {{
+        borderRadius: Math.round(Dimensions.get('window').width + Dimensions.get('window').height) / 2,
+        width: 150,
+        height: 150,
+        borderWidth: 5,
+        borderColor: '#f00',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginVertical: 10
+      }}
+
+
+    >
+         <Image
+                                  style={styles.thumbEvo}
+                                  source={{ uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/bulbasaur.png` }}
+                                />
+    </View>
+
+
+      </View>
+    </ScrollView>
   );
 }
 
@@ -82,4 +293,32 @@ const styles = StyleSheet.create({
       item: {
         width: '50%' // is 50% of container width
       },
+
+      box: {
+        width: 50,
+        height: 50,
+      },
+      row: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        justifyContent: "space-around"
+      },
+      thumbOther: {
+        height: 100,
+        // borderTopLeftRadius: 16,
+        // borderTopRightRadius: 16,
+        width: 100,
+      },
+      thumbEvo: {
+        height: 200,
+        // borderTopLeftRadius: 16,
+        // borderTopRightRadius: 16,
+        width: 200,
+      },
+      circleView: {
+        height: 30,
+        width: 30,
+        borderRadius: 15
+    },
+    text: { textAlign: 'center', lineHeight: 25, color: 'black', fontWeight: 'bold' }
 });
