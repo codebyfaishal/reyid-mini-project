@@ -1,5 +1,5 @@
 //Pokemons.js
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import {
   View,
   Text,
@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   SafeAreaView,
   Alert,
+  RefreshControl,
 } from 'react-native';
 import {ScrollView, FlatList} from 'react-native-gesture-handler';
 
@@ -22,7 +23,10 @@ const Pokemons = props => {
   console.log('props', props)
   const [selectedId, setSelectedId] = useState();
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
+
+  //error if no data
   const showAlert = () =>
 Alert.alert(
   (pokemons.message),
@@ -32,6 +36,21 @@ Alert.alert(
   ],
   {cancelable: false},
 );
+
+//pull to refresh
+// const onRefresh = () => {
+//   //set isRefreshing to true
+//   setRefreshing(true)
+//   getPokemonsRequest(false)
+//   // and set isRefreshing to false at the end of your callApiMethod()
+// }
+
+const onRefresh = useCallback(() => {
+  setRefreshing(true);
+  setTimeout(() => {
+    setRefreshing(false);
+  }, 2000);
+}, [getPokemonsRequest]);
 
 
   useEffect(() => {
@@ -85,6 +104,7 @@ Alert.alert(
         renderItem={renderItem}
         keyExtractor={item => item.name}
         extraData={selectedId}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
       />
       <Actionsheet isOpen={isModalVisible} disableOverlay={true}>
         <Actionsheet.Content>
