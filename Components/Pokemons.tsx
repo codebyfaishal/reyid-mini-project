@@ -8,7 +8,7 @@ import {
   StyleSheet,
   ActivityIndicator,
   SafeAreaView,
-  StatusBar,
+  Alert,
 } from 'react-native';
 import {ScrollView, FlatList} from 'react-native-gesture-handler';
 
@@ -19,15 +19,24 @@ import {getPokemonsRequest} from '../actions/pokemons';
 const Pokemons = props => {
   const {getPokemonsRequest, pokemons, loading, navigation} = props;
   const {isOpen, onOpen, onClose} = useDisclose();
-  // console.log('props', props)
+  console.log('props', props)
   const [selectedId, setSelectedId] = useState();
   const [isModalVisible, setIsModalVisible] = useState(false);
-  console.log('isModalVisible', isModalVisible);
-  console.log('setIsModalVisible', setIsModalVisible);
+
+  const showAlert = () =>
+Alert.alert(
+  (pokemons.message),
+  'My Alert Msg', // <- this part is optional, you can pass an empty string
+  [
+    {text: 'OK', onPress: () => console.log('OK Pressed')},
+  ],
+  {cancelable: false},
+);
+
 
   useEffect(() => {
     getPokemonsRequest();
-  }, [getPokemonsRequest]);
+  }, []);
 
   // Condition when Fetch
   if (props.pokemons.loading) {
@@ -35,6 +44,12 @@ const Pokemons = props => {
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
         <ActivityIndicator size="large" color="#26D27F" />
       </View>
+    );
+  }
+
+  if (props.pokemons.showError) {
+    return (
+   showAlert()
     );
   }
 
