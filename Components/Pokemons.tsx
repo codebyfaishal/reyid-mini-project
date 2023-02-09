@@ -96,11 +96,6 @@ const onRefresh = useCallback(() => {
   console.log('newArray', newArray)
 
 
-if (page === 2) {
-  console.log("HALAMAN 2")
-} else {
-  console.log("BUKAN")
-}
 
 //Switch Case
 const testArray = [newArray];
@@ -110,18 +105,42 @@ for (let i = 0; i < 1000; i++) {
 
 
 
-function testPage(){
+// function testPage(){
 
-if (page === 1) {
-  console.log("PAGE 1")
+// if (page === 1) {
+//   console.log("PAGE 1")
 
-} else if (page === 2) {
-  console.log("PAGE 2", newArray[1])
-} else if (page === 3) {
-console.log("PAGE 3")
-} else {
-  console.log("NYASAR LU")
-}
+// } else if (page === 2) {
+//   console.log("PAGE 2 NIH", newArray[1])
+// } else if (page === 3) {
+// console.log("PAGE 3")
+// } else {
+//   console.log("NYASAR LU")
+// }
+// }
+
+function testPage() {
+  if (page === 1) {
+    return newArray[0];
+  } else if (page === 2) {
+    return newArray[1];
+  } else if (page === 3) {
+    return newArray[2];
+  } else if (page === 9) {
+    return newArray[8];
+  } else if (page === 4) {
+    return newArray[3];
+  } else if (page === 5) {
+    return newArray[4];
+  } else if (page === 6) {
+    return newArray[5];
+  } else if (page === 7) {
+    return newArray[6];
+  } else if (page === 8) {
+    return newArray[7];
+  } else {
+    console.log("NYASAR LU");
+  }
 }
 
   
@@ -172,7 +191,7 @@ console.log("PAGE 3")
   return (
     <SafeAreaView style={{flex: 1, marginVertical: -30}}>
       <FlatList
-        data={pokemons.items}
+        data={testPage()}
         renderItem={renderItem}
         keyExtractor={item => item.name}
         extraData={selectedId}
