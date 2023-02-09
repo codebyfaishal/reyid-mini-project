@@ -102,6 +102,27 @@ if (page === 2) {
   console.log("BUKAN")
 }
 
+//Switch Case
+const testArray = [newArray];
+for (let i = 0; i < 1000; i++) {
+  testArray.push(i);
+}
+
+
+
+function testPage(){
+
+if (page === 1) {
+  console.log("PAGE 1")
+
+} else if (page === 2) {
+  console.log("PAGE 2", newArray[1])
+} else if (page === 3) {
+console.log("PAGE 3")
+} else {
+  console.log("NYASAR LU")
+}
+}
 
   
 
@@ -149,7 +170,7 @@ if (page === 2) {
   };
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1, marginVertical: -30}}>
       <FlatList
         data={pokemons.items}
         renderItem={renderItem}
