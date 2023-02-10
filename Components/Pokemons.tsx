@@ -17,6 +17,7 @@ import {Button, Actionsheet, useDisclose} from 'native-base';
 import {connect} from 'react-redux';
 import {getPokemonsRequest} from '../actions/pokemons';
 import Pagination from '@cherry-soft/react-native-basic-pagination';
+import LoadingComponent from './LoadingComponent';
 
 const Pokemons = props => {
   const {getPokemonsRequest, pokemons, loading, navigation} = props;
@@ -58,8 +59,9 @@ const onRefresh = useCallback(() => {
   if (props.pokemons.loading) {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <ActivityIndicator size="large" color="#26D27F" />
-      </View>
+      <ActivityIndicator size="large" color="#26D27F" />
+    </View>
+      // <LoadingComponent/>
     );
   }
 
