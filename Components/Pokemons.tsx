@@ -10,8 +10,8 @@ import {
   SafeAreaView,
   Alert,
   RefreshControl,
+  FlatList
 } from 'react-native';
-import {ScrollView, FlatList} from 'react-native-gesture-handler';
 
 import {Button, Actionsheet, useDisclose} from 'native-base';
 import {connect} from 'react-redux';
@@ -121,7 +121,7 @@ function pagePrevNext() {
   
 
   //Handle Bottom Modal
-  const handleDecline = () =>
+  const handleMoreDetail = () =>
     setIsModalVisible(() => props.navigation.navigate('Pokemons Detail'));
   const handleModal = () => setIsModalVisible(() => !isModalVisible);
 
@@ -193,7 +193,7 @@ function pagePrevNext() {
             {'Abilities :'} {'overgrow'}
           </Text>
           <Text style={styles.nameDescription}>{'Type:'} </Text>
-          <Button onPress={handleDecline} colorScheme="emerald">
+          <Button onPress={handleMoreDetail} colorScheme="emerald">
             More Detail
           </Button>
         </Actionsheet.Content>
