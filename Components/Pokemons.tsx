@@ -29,7 +29,7 @@ const Pokemons = props => {
   console.log(page)
 
 
-  //error if no data
+  //show alert if no Data
   const showAlert = () =>
 Alert.alert(
   (pokemons.message),
@@ -40,14 +40,8 @@ Alert.alert(
   {cancelable: false},
 );
 
-//pull to refresh
-// const onRefresh = () => {
-//   //set isRefreshing to true
-//   setRefreshing(true)
-//   getPokemonsRequest(false)
-//   // and set isRefreshing to false at the end of your callApiMethod()
-// }
 
+//handle pull to refresh
 const onRefresh = useCallback(() => {
   setRefreshing(true);
   setTimeout(() => {
@@ -60,7 +54,7 @@ const onRefresh = useCallback(() => {
     getPokemonsRequest();
   }, []);
 
-  // Condition when Fetch
+  // condition when loading show indicator
   if (props.pokemons.loading) {
     return (
       <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -69,6 +63,7 @@ const onRefresh = useCallback(() => {
     );
   }
 
+  // implement show alert
   if (props.pokemons.showError) {
     return (
    showAlert()
@@ -76,7 +71,7 @@ const onRefresh = useCallback(() => {
   }
 
 
-  // logic pecah jadi 10
+  // grouping item when fetch, become newarray contains 100
   const pokemon = [...pokemons.items];
   for (let i = 0; i < 1000; i++) {
     pokemon.push([i]);
@@ -97,29 +92,9 @@ const onRefresh = useCallback(() => {
 
 
 
-//Switch Case
-const testArray = [newArray];
-for (let i = 0; i < 1000; i++) {
-  testArray.push(i);
-}
 
-
-
-// function testPage(){
-
-// if (page === 1) {
-//   console.log("PAGE 1")
-
-// } else if (page === 2) {
-//   console.log("PAGE 2 NIH", newArray[1])
-// } else if (page === 3) {
-// console.log("PAGE 3")
-// } else {
-//   console.log("NYASAR LU")
-// }
-// }
-
-function testPage() {
+//function for prev and next page 
+function pagePrevNext() {
   if (page === 1) {
     return newArray[0];
   } else if (page === 2) {
@@ -145,7 +120,7 @@ function testPage() {
 
   
 
-  //Handle Button
+  //Handle Bottom Modal
   const handleDecline = () =>
     setIsModalVisible(() => props.navigation.navigate('Pokemons Detail'));
   const handleModal = () => setIsModalVisible(() => !isModalVisible);
@@ -174,6 +149,7 @@ function testPage() {
     return <Item name={item.name} onPress={() => setSelectedId(item.name)} />;
   };
 
+  // render next or prev page component
   const ListFooter = () => {
     //View to set in Footer
     return (
@@ -191,7 +167,7 @@ function testPage() {
   return (
     <SafeAreaView style={{flex: 1, marginVertical: -30}}>
       <FlatList
-        data={testPage()}
+        data={pagePrevNext()}
         renderItem={renderItem}
         keyExtractor={item => item.name}
         extraData={selectedId}
