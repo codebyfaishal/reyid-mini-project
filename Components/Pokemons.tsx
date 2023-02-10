@@ -1,5 +1,5 @@
 //Pokemons.js
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect, useCallback, useMemo} from 'react';
 import {
   View,
   Text,
@@ -10,7 +10,8 @@ import {
   SafeAreaView,
   Alert,
   RefreshControl,
-  FlatList
+  FlatList,
+  ScrollView,
 } from 'react-native';
 
 import {Button, Actionsheet, useDisclose} from 'native-base';
@@ -22,160 +23,128 @@ import LoadingComponent from './LoadingComponent';
 const Pokemons = props => {
   const {getPokemonsRequest, pokemons, loading, navigation} = props;
   const {isOpen, onOpen, onClose} = useDisclose();
-  console.log("PROPS", props)
+  console.log('PROPS', props);
   const [selectedId, setSelectedId] = useState();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [page, setPage] = useState(1);
-  console.log(page)
-
-
-  //show alert if no Data
-  const showAlert = () =>
-Alert.alert(
-  (pokemons.message),
-  'My Alert Msg', // <- this part is optional, you can pass an empty string
-  [
-    {text: 'OK', onPress: () => console.log('OK Pressed')},
-  ],
-  {cancelable: false},
-);
-
-
-//handle pull to refresh
-const onRefresh = useCallback(() => {
-  setRefreshing(true);
-  setTimeout(() => {
-    setRefreshing(false);
-  }, 2000);
-}, [getPokemonsRequest]);
-
 
   useEffect(() => {
     getPokemonsRequest();
   }, []);
-
-  // condition when loading show indicator
-  if (props.pokemons.loading) {
-    return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <ActivityIndicator size="large" color="#26D27F" />
-    </View>
-      // <LoadingComponent/>
-    );
-  }
-
-  // implement show alert
-  if (props.pokemons.showError) {
-    return (
-   showAlert()
-    );
-  }
-
-
-  // grouping item when fetch, become newarray contains 100
-  const pokemon = [...pokemons.items];
-  for (let i = 0; i < 1000; i++) {
-    pokemon.push([i]);
-  }
-  
-  let subArrays = [];
-  let subArrayCount = 0;
-  for (let i = 0; i < pokemon.length; i++) {
-    if (i % 100 === 0) {
-      subArrays[subArrayCount] = [];
-      subArrayCount++;
-    }
-    subArrays[subArrayCount - 1].push(pokemon[i]);
-  }
-  
-  const newArray = subArrays;
-  console.log('newArray', newArray)
-
-
-
-
-//function for prev and next page 
-function pagePrevNext() {
-  if (page === 1) {
-    return newArray[0];
-  } else if (page === 2) {
-    return newArray[1];
-  } else if (page === 3) {
-    return newArray[2];
-  } else if (page === 9) {
-    return newArray[8];
-  } else if (page === 4) {
-    return newArray[3];
-  } else if (page === 5) {
-    return newArray[4];
-  } else if (page === 6) {
-    return newArray[5];
-  } else if (page === 7) {
-    return newArray[6];
-  } else if (page === 8) {
-    return newArray[7];
-  } else {
-    console.log("NYASAR LU");
-  }
-}
-
-  
 
   //Handle Bottom Modal
   const handleMoreDetail = () =>
     setIsModalVisible(() => props.navigation.navigate('Pokemons Detail'));
   const handleModal = () => setIsModalVisible(() => !isModalVisible);
 
-  
+  // LOGIC PAGING FOOTER
+  let pageSize = 10;
 
+  const currentTableData = useMemo(() => {
+    const firstPageIndex = (page - 1) * pageSize;
+    const lastPageIndex = firstPageIndex + pageSize;
+    return pokemons.items.slice(firstPageIndex, lastPageIndex);
+  }, [page]);
 
+  console.log('currentTableData', currentTableData);
 
-  //buat komponen item
-  const Item = ({name, onPress}) => (
-    <TouchableOpacity onPress={handleModal} style={styles.card}>
-      <Image
-        style={styles.thumb}
-        source={{
-          uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/${name}.png`,
-        }}
-      />
-      <View style={styles.infoContainer}>
-        <Text style={styles.name}>{name}</Text>
+  //show alert if no Data
+  const showAlert = () =>
+    Alert.alert(
+      pokemons.message,
+      'My Alert Msg', // <- this part is optional, you can pass an empty string
+      [{text: 'OK', onPress: () => console.log('OK Pressed')}],
+      {cancelable: false},
+    );
+
+  // condition when loading show indicator
+  if (props.pokemons.loading) {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size="large" color="#26D27F" />
       </View>
-    </TouchableOpacity>
-  );
+      // <LoadingComponent/>
+    );
+  }
 
-  //render komponen item
-  const renderItem = ({item}) => {
-    return <Item name={item.name} onPress={() => setSelectedId(item.name)} />;
-  };
+  // implement show alert
+  if (props.pokemons.showError) {
+    return showAlert();
+  }
 
-  // render next or prev page component
-  const ListFooter = () => {
+  // KOMPONEN PAGING FOOTER
+  const ListPagingFooter = () => {
     //View to set in Footer
     return (
       <Pagination
-      totalItems={props.pokemons.items.length}
-      pageSize={100}
-      currentPage={page}
-      onPageChange={setPage}
-      pagesToDisplay={4}
-      showLastPagesButtons
-    />
+        totalItems={props.pokemons.items.length} //oke totalCount
+        pageSize={pageSize} //oke pageSize
+        currentPage={page} //oke currentPage
+        // onPageChange={setPage}//oke onPageChange
+        onPageChange={page => setPage(page)}
+        pagesToDisplay={4}
+        showLastPagesButtons
+      />
     );
   };
 
+  // FUNCTION PAKE FLATLIST, KEKURANNYA PAGING BLM SESUAI.
+  // START
+
+  //buat komponen item
+  // const Item = ({name, onPress}) => (
+  //   <TouchableOpacity onPress={handleModal} style={styles.card}>
+  //     <Image
+  //       style={styles.thumb}
+  //       source={{
+  //         uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/${name}.png`,
+  //       }}
+  //     />
+  //     <View style={styles.infoContainer}>
+  //       <Text style={styles.name}>{name}</Text>
+  //     </View>
+  //   </TouchableOpacity>
+  // );
+
+  // //render komponen item
+  // const renderItem = ({item}) => {
+  //   return <Item name={item.name} onPress={() => setSelectedId(item.name)} />;
+  // };
+
+  // //handle pull to refresh
+  // const onRefresh = useCallback(() => {
+  //   setRefreshing(true);
+  //   setTimeout(() => {
+  //     setRefreshing(false);
+  //   }, 2000);
+  // }, [getPokemonsRequest]);
+
+  // END
+
   return (
     <SafeAreaView style={{flex: 1, marginVertical: -30}}>
-      <FlatList
-        data={pagePrevNext()}
-        renderItem={renderItem}
-        keyExtractor={item => item.name}
-        extraData={selectedId}
-        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-      />
-      <ListFooter></ListFooter>
+      <ScrollView>
+        {currentTableData.map(item => {
+          return (
+            <TouchableOpacity
+              key={item.name}
+              onPress={handleModal}
+              style={styles.card}>
+              <Image
+                style={styles.thumb}
+                source={{
+                  uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/${item.name}.png`,
+                }}
+              />
+              <View style={styles.infoContainer}>
+                <Text style={styles.name}>{item.name}</Text>
+              </View>
+            </TouchableOpacity>
+          );
+        })}
+      </ScrollView>
+      <ListPagingFooter />
       <Actionsheet isOpen={isModalVisible} disableOverlay={true}>
         <Actionsheet.Content>
           <Text style={styles.nameTitleModal}>{'bulbasaur'}</Text>
