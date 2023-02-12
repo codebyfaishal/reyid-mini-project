@@ -1,5 +1,5 @@
 //Pokemons.js
-import React, {useState, useEffect, useCallback, useMemo} from 'react';
+import React, {useState, useEffect, useRef, useMemo} from 'react';
 import {
   View,
   Text,
@@ -14,11 +14,14 @@ import {
   ScrollView,
 } from 'react-native';
 
-import {Button, Actionsheet, useDisclose} from 'native-base';
 import {connect} from 'react-redux';
-import {getPokemonsRequest} from '../actions/pokemons';
+import {getPokemonsRequest} from '../../actions/pokemons';
+
+//Component & Style
 import Pagination from '@cherry-soft/react-native-basic-pagination';
-import LoadingComponent from './LoadingComponent';
+import styles from './PokemonsStyle';
+import {Button, Actionsheet, useDisclose} from 'native-base';
+// import LoadingComponent from '../LoadingComponent';
 
 const Pokemons = props => {
   const {getPokemonsRequest, pokemons, loading, navigation} = props;
@@ -48,6 +51,17 @@ const Pokemons = props => {
   }, [page]);
 
   console.log('currentTableData', currentTableData);
+
+  // Back to Top
+  const scrollRef = useRef();
+
+  const setPageWithOnPressTouch = page => {
+    setPage(page);
+    scrollRef.current?.scrollTo({
+      y: 0,
+      animated: true,
+    });
+  };
 
   //show alert if no Data
   const showAlert = () =>
@@ -82,7 +96,7 @@ const Pokemons = props => {
         pageSize={pageSize} //oke pageSize
         currentPage={page} //oke currentPage
         // onPageChange={setPage}//oke onPageChange
-        onPageChange={page => setPage(page)}
+        onPageChange={setPageWithOnPressTouch}
         pagesToDisplay={4}
         showLastPagesButtons
       />
@@ -123,8 +137,8 @@ const Pokemons = props => {
   // END
 
   return (
-    <SafeAreaView style={{flex: 1, marginVertical: -30}}>
-      <ScrollView>
+    <SafeAreaView style={{flex: 1}}>
+      <ScrollView ref={scrollRef}>
         {currentTableData.map(item => {
           return (
             <TouchableOpacity
@@ -176,79 +190,3 @@ const Pokemons = props => {
 export default connect(({pokemons}) => ({pokemons}), {
   getPokemonsRequest,
 })(Pokemons);
-
-const styles = StyleSheet.create({
-  card: {
-    backgroundColor: 'white',
-    borderRadius: 16,
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    shadowColor: 'black',
-    shadowOffset: {
-      height: 0,
-      width: 0,
-    },
-    elevation: 1,
-    marginVertical: 20,
-    height: 350,
-    marginHorizontal: 50,
-  },
-  thumb: {
-    height: 260,
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
-    width: '100%',
-  },
-  infoContainer: {
-    padding: 16,
-  },
-  name: {
-    fontSize: 22,
-    fontWeight: 'bold',
-  },
-  nameTitleModal: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    paddingHorizontal: 8,
-    paddingVertical: 6,
-    alignSelf: 'flex-start',
-    marginHorizontal: '1%',
-    marginBottom: 6,
-    minWidth: '48%',
-    textAlign: 'center',
-    // width: '50%'
-  },
-  nameDescription: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    paddingHorizontal: 8,
-    paddingVertical: 6,
-    alignSelf: 'flex-start',
-    marginHorizontal: 25,
-    marginBottom: 6,
-    // minWidth: '48%',
-    textAlign: 'center',
-  },
-  nameValue: {
-    fontSize: 20,
-  },
-  price: {
-    fontSize: 16,
-    fontWeight: '600',
-    marginBottom: 8,
-  },
-  item: {
-    width: '50%', // is 50% of container width
-  },
-  headerFooterStyle: {
-    width: '100%',
-    height: 45,
-    backgroundColor: '#606070',
-  },
-  textStyle: {
-    textAlign: 'center',
-    color: '#fff',
-    fontSize: 18,
-    padding: 7,
-  },
-});

@@ -8,9 +8,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NativeBaseProvider } from 'native-base';
 
-import Pokemons from './Components/Pokemons';
-import welcomeScreen from './Components/welcomeScreen';
-import PokemonsDetail from './Components/PokemonsDetail';
+import Pokemons from './Components/Pokemon/Pokemons';
+import welcomeScreen from './Components/WelcomePage/welcomeScreen';
+import PokemonsDetail from './Components/Pokemon/PokemonsDetail';
 
 const Stack = createStackNavigator();
 

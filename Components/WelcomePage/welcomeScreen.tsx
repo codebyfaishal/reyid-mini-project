@@ -1,13 +1,16 @@
 import * as React from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
+
+//Component & styles
 import {Button} from 'native-base';
+import styles from './welcomeScreenStyle';
 
 function welcomeScreen({navigation}) {
   return (
     <View>
       <Image
         style={styles.thumb}
-        source={require('./assets/welcomeImage.png')}
+        source={require('../assets/welcomeImage.png')}
       />
       <Text style={styles.title}>
         All the Pokémon data you'll ever need in one place!
@@ -25,29 +28,5 @@ function welcomeScreen({navigation}) {
   );
 }
 
-const styles = StyleSheet.create({
-  thumb: {
-    height: 400,
-    borderTopLeftRadius: 16,
-    borderTopRightRadius: 16,
-    width: '100%',
-  },
-  title: {
-    fontSize: 42,
-    fontWeight: 'bold',
-    marginHorizontal: 25,
-  },
-  title2: {
-    fontSize: 20,
-    color: 'gray',
-    marginHorizontal: 25,
-    marginVertical: 10,
-  },
-  button: {
-    marginHorizontal: 25,
-    marginVertical: 10,
-    width: '50%',
-  },
-});
 
 export default welcomeScreen;
