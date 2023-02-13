@@ -4,7 +4,7 @@ import * as api from "../api/pokemons";
 
 function* getPokemons() {
   try {
-    const result = yield call(api.getPokemons);
+    const result = yield call(api.apiGetPokemons);
 
     yield put(actions.getPokemonsSuccess(result.data.results));
 
