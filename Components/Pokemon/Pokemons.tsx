@@ -26,7 +26,6 @@ import {Button, Actionsheet, useDisclose} from 'native-base';
 const Pokemons = props => {
   const {getPokemonsRequest, pokemons, loading, navigation} = props;
   const {isOpen, onOpen, onClose} = useDisclose();
-  console.log('PROPS', props);
   const [selectedId, setSelectedId] = useState();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
@@ -37,9 +36,24 @@ const Pokemons = props => {
   }, []);
 
   //Handle Bottom Modal
-  const handleMoreDetail = () =>
-    setIsModalVisible(() => props.navigation.navigate('Pokemons Detail'));
-  const handleModal = () => setIsModalVisible(() => !isModalVisible);
+  // const handleMoreDetail = () =>
+  //   setIsModalVisible(() => props.navigation.navigate('Pokemons Detail'));
+  const handleMoreDetail = () => {
+    props.navigation.navigate('Pokemons Detail');
+    setIsModalVisible(false);
+    onClose();
+  };
+    const handleModal = () => {
+      const newIsModalVisible = !isModalVisible;
+      setIsModalVisible(() => newIsModalVisible);
+      onOpen(newIsModalVisible);
+    };
+
+    const handleClose = () => {
+      onClose();
+      setIsModalVisible(false);
+  }
+
 
   // LOGIC PAGING FOOTER
   let pageSize = 10;
@@ -159,7 +173,7 @@ const Pokemons = props => {
         })}
       </ScrollView>
       <ListPagingFooter />
-      <Actionsheet isOpen={isModalVisible} disableOverlay={true}>
+      <Actionsheet isOpen={isOpen} onClose={handleClose}>
         <Actionsheet.Content>
           <Text style={styles.nameTitleModal}>{'bulbasaur'}</Text>
           <Image
