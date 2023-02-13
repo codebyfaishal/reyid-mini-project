@@ -55,7 +55,7 @@ const Pokemons = props => {
   // Back to Top
   const scrollRef = useRef();
 
-  const setPageWithOnPressTouch = page => {
+  const handlePageChange = page => {
     setPage(page);
     scrollRef.current?.scrollTo({
       y: 0,
@@ -96,7 +96,7 @@ const Pokemons = props => {
         pageSize={pageSize} //oke pageSize
         currentPage={page} //oke currentPage
         // onPageChange={setPage}//oke onPageChange
-        onPageChange={setPageWithOnPressTouch}
+        onPageChange={handlePageChange}
         pagesToDisplay={4}
         showLastPagesButtons
       />
