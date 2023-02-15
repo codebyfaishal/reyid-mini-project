@@ -4,3 +4,4 @@ import pokemonsSagas from './pokemons';
 export default function* rootSaga() {
   yield all([...pokemonsSagas]);
 }
+

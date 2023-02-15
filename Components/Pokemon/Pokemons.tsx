@@ -23,18 +23,28 @@ import styles from './PokemonsStyle';
 import {Button, Actionsheet, useDisclose} from 'native-base';
 // import LoadingComponent from '../LoadingComponent';
 
+//custom hooks
+import useFetchDetails from '../useFetchDetails';
+
 const Pokemons = props => {
-  const {getPokemonsRequest, pokemons, loading, navigation} = props;
+  const {getPokemonsRequest, pokemons, navigation} = props;
   const {isOpen, onOpen, onClose} = useDisclose();
   const [selectedId, setSelectedId] = useState();
-  console.log("selectedId", selectedId)
+  console.log('selectedId', selectedId)
+  console.log("PrOPS", props.pokemons.itemsDetail.itemsDetail.abilities[0].ability.name)
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [page, setPage] = useState(1);
+  const { itemsDetail, loadingDetail, errorDetail } = useFetchDetails(selectedId);
+
 
   useEffect(() => {
     getPokemonsRequest();
   }, []);
+
+  // useEffect(() => {
+  //   useFetchDetails();
+  // }, []);
 
   //Handle Bottom Modal
   // const handleMoreDetail = () =>
@@ -65,7 +75,7 @@ const Pokemons = props => {
     return pokemons.items.slice(firstPageIndex, lastPageIndex);
   }, [page]);
 
-  console.log('currentTableData', currentTableData);
+  // console.log('currentTableData', currentTableData);
 
   // Back to Top
   const scrollRef = useRef();
@@ -190,13 +200,13 @@ const Pokemons = props => {
             }}
           />
           <Text style={styles.nameDescription}>
-            {'Weight :'} {'69'}
+            {'Weight :'} {props.pokemons.itemsDetail.itemsDetail.weight}
           </Text>
           <Text style={styles.nameDescription}>
-            {'Height :'} {'7'}
+            {'Height :'} {props.pokemons.itemsDetail.itemsDetail.height}
           </Text>
           <Text style={styles.nameDescription}>
-            {'Abilities :'} {'overgrow'}
+            {'Abilities :'} {props.pokemons.itemsDetail.itemsDetail.abilities[0].ability.name}
           </Text>
           <Text style={styles.nameDescription}>{'Type:'} </Text>
           <Button onPress={handleMoreDetail} colorScheme="emerald">
