@@ -27,6 +27,7 @@ const Pokemons = props => {
   const {getPokemonsRequest, pokemons, loading, navigation} = props;
   const {isOpen, onOpen, onClose} = useDisclose();
   const [selectedId, setSelectedId] = useState();
+  console.log("selectedId", selectedId)
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [page, setPage] = useState(1);
@@ -157,7 +158,13 @@ const Pokemons = props => {
           return (
             <TouchableOpacity
               key={item.name}
-              onPress={handleModal}
+              onPress={handleModal => {
+                const newIsModalVisible = !isModalVisible;
+                setIsModalVisible(() => newIsModalVisible);
+                onOpen(newIsModalVisible);
+                // do something with handleModal
+                setSelectedId(item.name);
+              }}
               style={styles.card}>
               <Image
                 style={styles.thumb}
@@ -175,11 +182,11 @@ const Pokemons = props => {
       <ListPagingFooter />
       <Actionsheet isOpen={isOpen} onClose={handleClose}>
         <Actionsheet.Content>
-          <Text style={styles.nameTitleModal}>{'bulbasaur'}</Text>
+          <Text style={styles.nameTitleModal}>{selectedId}</Text>
           <Image
             style={styles.thumb}
             source={{
-              uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/bulbasaur.png`,
+              uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/${selectedId}.png`,
             }}
           />
           <Text style={styles.nameDescription}>
