@@ -31,7 +31,10 @@ const Pokemons = props => {
   const {isOpen, onOpen, onClose} = useDisclose();
   const [selectedId, setSelectedId] = useState();
   console.log('selectedId', selectedId)
-  console.log("PrOPS", props.pokemons.itemsDetail.itemsDetail.abilities[0].ability.name)
+  const [selectedName, setSelectedName] = useState();
+  console.log('selectedName', selectedName)
+  // console.log("PrOPS", props.pokemons.itemsDetail.itemsDetail.abilities[0].ability.name)
+  console.log("PROPS", props)
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [page, setPage] = useState(1);
@@ -50,7 +53,7 @@ const Pokemons = props => {
   // const handleMoreDetail = () =>
   //   setIsModalVisible(() => props.navigation.navigate('Pokemons Detail'));
   const handleMoreDetail = () => {
-    props.navigation.navigate('Pokemons Detail');
+    props.navigation.navigate('Pokemons Detail', {selectedId: selectedId, selectedName: selectedName});
     setIsModalVisible(false);
     onClose();
   };
@@ -164,7 +167,7 @@ const Pokemons = props => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <ScrollView ref={scrollRef}>
-        {currentTableData.map(item => {
+        {currentTableData.map((item, index) => {
           return (
             <TouchableOpacity
               key={item.name}
@@ -173,7 +176,8 @@ const Pokemons = props => {
                 setIsModalVisible(() => newIsModalVisible);
                 onOpen(newIsModalVisible);
                 // do something with handleModal
-                setSelectedId(item.name);
+                setSelectedId(index + 1);
+                setSelectedName(item.name)
               }}
               style={styles.card}>
               <Image
@@ -192,23 +196,23 @@ const Pokemons = props => {
       <ListPagingFooter />
       <Actionsheet isOpen={isOpen} onClose={handleClose}>
         <Actionsheet.Content>
-          <Text style={styles.nameTitleModal}>{selectedId}</Text>
+          <Text style={styles.nameTitleModal}>{selectedName}</Text>
           <Image
             style={styles.thumb}
             source={{
-              uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/${selectedId}.png`,
+              uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/${selectedName}.png`,
             }}
           />
           <Text style={styles.nameDescription}>
-            {'Weight :'} {props.pokemons.itemsDetail.itemsDetail.weight}
+            {'Weight :'} {props.pokemons.itemsDetail.itemsDetail?.weight}
           </Text>
           <Text style={styles.nameDescription}>
-            {'Height :'} {props.pokemons.itemsDetail.itemsDetail.height}
+            {'Height :'} {props.pokemons.itemsDetail.itemsDetail?.height}
           </Text>
           <Text style={styles.nameDescription}>
-            {'Abilities :'} {props.pokemons.itemsDetail.itemsDetail.abilities[0].ability.name}
+            {'Abilities :'} {props.pokemons.itemsDetail.itemsDetail?.abilities[0].ability.name}
           </Text>
-          <Text style={styles.nameDescription}>{'Type:'} </Text>
+          <Text style={styles.nameDescription}>{'Type:'} {props.pokemons.itemsDetail.itemsDetail?.types[0].type.name}</Text>
           <Button onPress={handleMoreDetail} colorScheme="emerald">
             More Detail
           </Button>

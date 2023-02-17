@@ -23,7 +23,7 @@ export const Types = {
 
   export const getPokemonsDetailsRequest = (selectedId) => ({
     type: Types.GET_POKEMONS_DETAILS_REQUEST,
-    selectedId
+    selectedId,
   });
   
   export const getPokemonsDetailsSuccess = itemsDetail => ({

@@ -12,27 +12,36 @@ import {
 
 //Component & styles
 import styles from './PokemonsStyle';
+import useFetchDetails from '../useFetchDetails';
+import { connect } from 'react-redux';
 
-export default function PokemonsDetail() {
+const PokemonsDetail = props => {
+  const {pokemons, navigation, route} = props;
+  const { itemId, selectedName, selectedId } = route.params;
+  console.log("selectedName DETAIL PAGE", selectedName)
+  console.log("selectedID DETAIL PAGE", selectedId)
+  console.log("PROPS DETAIL", props)
+  const { itemsDetail, loadingDetail, errorDetail } = useFetchDetails(selectedId);
+  
   return (
     <ScrollView>
-      <Text style={styles.nameTitleModal}>{'bulbasaur'}</Text>
+      <Text style={styles.nameTitleModal}>{selectedName}</Text>
       <Image
         style={styles.thumb}
         source={{
-          uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/bulbasaur.png`,
+          uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/${selectedName}.png`,
         }}
       />
       <Text style={styles.nameDescription}>
-        {'Weight :'} {'69'}
+      {'Weight :'} {props.pokemons.itemsDetail.itemsDetail?.weight}
       </Text>
       <Text style={styles.nameDescription}>
-        {'Height :'} {'7'}
+      {'Height :'} {props.pokemons.itemsDetail.itemsDetail?.height}
       </Text>
       <Text style={styles.nameDescription}>
-        {'Abilities :'} {'overgrow'}
+      {'Abilities :'} {props.pokemons.itemsDetail.itemsDetail?.abilities[0].ability.name}
       </Text>
-      <Text style={styles.nameDescription}>{'Type:'} </Text>
+      <Text style={styles.nameDescription}>{'Type:'} {props.pokemons.itemsDetail.itemsDetail?.types[0].type.name} </Text>
       <Text style={styles.nameDescription}>{'Other Images:'} </Text>
 
       <View style={styles.row}>
@@ -91,8 +100,8 @@ export default function PokemonsDetail() {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Text> 67 </Text>
-          <Text> Stat 1 </Text>
+          <Text> {props.pokemons.itemsDetail.itemsDetail?.stats[0].base_stat} </Text>
+          <Text> {props.pokemons.itemsDetail.itemsDetail?.stats[0].stat.name} </Text>
         </View>
         <View
           style={{
@@ -108,8 +117,8 @@ export default function PokemonsDetail() {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Text> 67 </Text>
-          <Text> Stat 1 </Text>
+                   <Text> {props.pokemons.itemsDetail.itemsDetail?.stats[1].base_stat} </Text>
+          <Text> {props.pokemons.itemsDetail.itemsDetail?.stats[1].stat.name} </Text>
         </View>
         <View
           style={{
@@ -125,8 +134,8 @@ export default function PokemonsDetail() {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Text> 67 </Text>
-          <Text> Stat 1 </Text>
+           <Text> {props.pokemons.itemsDetail.itemsDetail?.stats[2].base_stat} </Text>
+          <Text> {props.pokemons.itemsDetail.itemsDetail?.stats[2].stat.name} </Text>
         </View>
         <View
           style={{
@@ -143,8 +152,8 @@ export default function PokemonsDetail() {
             alignItems: 'center',
             marginVertical: 10,
           }}>
-          <Text> 67 </Text>
-          <Text> Stat 1 </Text>
+          <Text> {props.pokemons.itemsDetail.itemsDetail?.stats[3].base_stat} </Text>
+          <Text> {props.pokemons.itemsDetail.itemsDetail?.stats[3].stat.name} </Text>
         </View>
         <View
           style={{
@@ -161,8 +170,8 @@ export default function PokemonsDetail() {
             alignItems: 'center',
             marginVertical: 10,
           }}>
-          <Text> 67 </Text>
-          <Text> Stat 1 </Text>
+          <Text> {props.pokemons.itemsDetail.itemsDetail?.stats[4].base_stat} </Text>
+          <Text> {props.pokemons.itemsDetail.itemsDetail?.stats[4].stat.name} </Text>
         </View>
         <View
           style={{
@@ -181,8 +190,8 @@ export default function PokemonsDetail() {
           }}
           //   underlayColor = '#ccc'
         >
-          <Text> 67 </Text>
-          <Text> Stat 1 </Text>
+             <Text> {props.pokemons.itemsDetail.itemsDetail?.stats[5].base_stat} </Text>
+          <Text> {props.pokemons.itemsDetail.itemsDetail?.stats[5].stat.name} </Text>
         </View>
       </View>
 
@@ -279,5 +288,9 @@ export default function PokemonsDetail() {
     </ScrollView>
   );
 }
+
+export default connect(({pokemons}) => ({pokemons}), {
+  // getPokemonsRequest,
+})(PokemonsDetail);
 
 
