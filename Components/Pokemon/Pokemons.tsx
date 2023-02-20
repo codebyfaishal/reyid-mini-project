@@ -170,7 +170,7 @@ const Pokemons = props => {
         {currentTableData.map((item, index) => {
           return (
             <TouchableOpacity
-              key={item.name}
+              key={index}
               onPress={handleModal => {
                 const newIsModalVisible = !isModalVisible;
                 setIsModalVisible(() => newIsModalVisible);
