@@ -7,7 +7,7 @@ function* getPokemons() {
     const result = yield call(api.apiGetPokemons);
     console.log("LIST", result)
 
-    yield put(actions.getPokemonsSuccess(result.data.results));
+    yield put(actions.getPokemonsSuccess(result.data));
 
   } catch (error) {
     yield put(actions.getPokemonsFailed(error.message))
@@ -33,7 +33,6 @@ export function* getPokemonsDetails(action) {
   console.log("AACTION", action);
   try {
     const result = yield call(api.apiGetPokemonsDetails, action.selectedId);
-    console.log("action select id", action);
     console.log("getPokemonsDetails", result.data);
 
     yield put(actions.getPokemonsDetailsSuccess(result.data));

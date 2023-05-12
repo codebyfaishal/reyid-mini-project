@@ -12,6 +12,7 @@ import {
   RefreshControl,
   FlatList,
   ScrollView,
+  TextInput,
 } from 'react-native';
 
 import {connect} from 'react-redux';
@@ -21,6 +22,7 @@ import {getPokemonsRequest} from '../../actions/pokemons';
 import Pagination from '@cherry-soft/react-native-basic-pagination';
 import styles from './PokemonsStyle';
 import {Button, Actionsheet, useDisclose} from 'native-base';
+import StarRating from 'react-native-star-rating-widget';
 // import LoadingComponent from '../LoadingComponent';
 
 //custom hooks
@@ -32,6 +34,15 @@ const Pokemons = props => {
   const [selectedId, setSelectedId] = useState();
   console.log('selectedId', selectedId)
   const [selectedName, setSelectedName] = useState();
+  const [selectedDescription, setSelectedDescription] = useState();
+  const [selectedTemp, setSelectedTemp] = useState();
+  const [selectedImage, setSelectedImage] = useState();
+  const[selectedAdap, setSelectedAdap] = useState();
+  const[selectedAffect, setSelectedAffect] = useState();
+  const[selectedChild, setSelectedChild] = useState();
+  const[selectedDog, setSelectedDog] = useState();
+  const [rating, setRating] = useState(0);
+  const [searchfeild, setSearchfeild] = useState('');
   console.log('selectedName', selectedName)
   // console.log("PrOPS", props.pokemons.itemsDetail.itemsDetail.abilities[0].ability.name)
   console.log("PROPS", props)
@@ -39,6 +50,8 @@ const Pokemons = props => {
   const [refreshing, setRefreshing] = useState(false);
   const [page, setPage] = useState(1);
   const { itemsDetail, loadingDetail, errorDetail } = useFetchDetails(selectedId);
+  console.log('itemsDetail', itemsDetail)
+  // console.log('get image', props.pokemons.itemsDetail.itemsDetail[0].url)
 
 
   useEffect(() => {
@@ -72,11 +85,11 @@ const Pokemons = props => {
   // LOGIC PAGING FOOTER
   let pageSize = 10;
 
-  const currentTableData = useMemo(() => {
-    const firstPageIndex = (page - 1) * pageSize;
-    const lastPageIndex = firstPageIndex + pageSize;
-    return pokemons.items.slice(firstPageIndex, lastPageIndex);
-  }, [page]);
+  // const currentTableData = useMemo(() => {
+  //   const firstPageIndex = (page - 1) * pageSize;
+  //   const lastPageIndex = firstPageIndex + pageSize;
+  //   return pokemons.items.slice(firstPageIndex, lastPageIndex);
+  // }, [page]);
 
   // console.log('currentTableData', currentTableData);
 
@@ -115,59 +128,26 @@ const Pokemons = props => {
     return showAlert();
   }
 
-  // KOMPONEN PAGING FOOTER
-  const ListPagingFooter = () => {
-    //View to set in Footer
-    return (
-      <Pagination
-        totalItems={props.pokemons.items.length} //oke totalCount
-        pageSize={pageSize} //oke pageSize
-        currentPage={page} //oke currentPage
-        // onPageChange={setPage}//oke onPageChange
-        onPageChange={handlePageChange}
-        pagesToDisplay={4}
-        showLastPagesButtons
-      />
-    );
-  };
 
-  // FUNCTION PAKE FLATLIST, KEKURANNYA PAGING BLM SESUAI.
-  // START
 
-  //buat komponen item
-  // const Item = ({name, onPress}) => (
-  //   <TouchableOpacity onPress={handleModal} style={styles.card}>
-  //     <Image
-  //       style={styles.thumb}
-  //       source={{
-  //         uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/${name}.png`,
-  //       }}
-  //     />
-  //     <View style={styles.infoContainer}>
-  //       <Text style={styles.name}>{name}</Text>
-  //     </View>
-  //   </TouchableOpacity>
-  // );
-
-  // //render komponen item
-  // const renderItem = ({item}) => {
-  //   return <Item name={item.name} onPress={() => setSelectedId(item.name)} />;
-  // };
-
-  // //handle pull to refresh
-  // const onRefresh = useCallback(() => {
-  //   setRefreshing(true);
-  //   setTimeout(() => {
-  //     setRefreshing(false);
-  //   }, 2000);
-  // }, [getPokemonsRequest]);
-
-  // END
 
   return (
     <SafeAreaView style={{flex: 1}}>
+         <View style={styles.searchCont}>
+        <TextInput
+          style={styles.searchfield}
+          placeholder="Search Cat"
+          onChangeText={value => setSearchfeild(value)}
+          value={searchfeild}
+        />
+      </View>
       <ScrollView ref={scrollRef}>
-        {currentTableData.map((item, index) => {
+        
+        {pokemons.items
+  .filter(item =>
+    item.name.toLowerCase().includes(searchfeild.toLowerCase())
+  )
+  .map((item, index) => {
           return (
             <TouchableOpacity
               key={index}
@@ -176,16 +156,22 @@ const Pokemons = props => {
                 setIsModalVisible(() => newIsModalVisible);
                 onOpen(newIsModalVisible);
                 // do something with handleModal
-                setSelectedId(index + 1);
+                setSelectedId(item.id);
                 setSelectedName(item.name)
+                setSelectedDescription(item.description)
+                setSelectedTemp(item.temperament)
+                setSelectedAdap(item.adaptability)
+                setSelectedAffect(item.affection_level)
+                setSelectedChild(item.child_friendly)
+                setSelectedDog(item.dog_friendly)
               }}
               style={styles.card}>
-              <Image
+              {/* <Image
                 style={styles.thumb}
                 source={{
                   uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/${item.name}.png`,
                 }}
-              />
+              /> */}
               <View style={styles.infoContainer}>
                 <Text style={styles.name}>{item.name}</Text>
               </View>
@@ -193,29 +179,44 @@ const Pokemons = props => {
           );
         })}
       </ScrollView>
-      <ListPagingFooter />
+      {/* <ListPagingFooter /> */}
       <Actionsheet isOpen={isOpen} onClose={handleClose}>
         <Actionsheet.Content>
           <Text style={styles.nameTitleModal}>{selectedName}</Text>
+          <Text style={styles.nameDescription}>{selectedDescription}</Text>
+          <Text style={styles.divider}>{"---"}</Text>
+          <Text style={styles.nameDescription}>{selectedTemp}</Text>
           <Image
             style={styles.thumb}
-            source={{
-              uri: `https://img.pokemondb.net/sprites/omega-ruby-alpha-sapphire/dex/normal/${selectedName}.png`,
-            }}
+            // source={{ uri: props.pokemons ? props.pokemons.itemsDetail.itemsDetail[0].url : props.pokemons.itemsDetail.itemsDetail[0].url }}
           />
           <Text style={styles.nameDescription}>
-            {'Weight :'} {props.pokemons.itemsDetail.itemsDetail?.weight}
+            {'Affection Level :'}    <StarRating
+        rating={selectedAffect}
+        onChange={setRating}
+      />
           </Text>
           <Text style={styles.nameDescription}>
-            {'Height :'} {props.pokemons.itemsDetail.itemsDetail?.height}
+            {'Adaptability :'}    <StarRating
+        rating={selectedAdap}
+        onChange={setRating}
+      />
           </Text>
           <Text style={styles.nameDescription}>
-            {'Abilities :'} {props.pokemons.itemsDetail.itemsDetail?.abilities[0].ability.name}
+            {'Child Friendly :'}    <StarRating
+        rating={selectedChild}
+        onChange={setRating}
+      />
           </Text>
-          <Text style={styles.nameDescription}>{'Type:'} {props.pokemons.itemsDetail.itemsDetail?.types[0].type.name}</Text>
-          <Button onPress={handleMoreDetail} colorScheme="emerald">
-            More Detail
-          </Button>
+          <Text style={styles.nameDescription}>
+            {'Dog Friendly :'} 
+            <StarRating
+            // style={{marginLeft: 10,}}
+        rating={selectedDog}
+        onChange={setRating}
+      />
+          </Text>
+       
         </Actionsheet.Content>
       </Actionsheet>
     </SafeAreaView>

@@ -16,15 +16,17 @@ const styles = StyleSheet.create({
         width: 0,
       },
       elevation: 1,
-      marginVertical: 20,
-      height: 350,
-      marginHorizontal: 50,
+      // marginVertical: 20,
+      height: 70,
+      marginTop: 60,
     },
     thumb: {
       height: 260,
-      borderTopLeftRadius: 16,
-      borderTopRightRadius: 16,
+      // borderTopLeftRadius: 16,
+      // borderTopRightRadius: 16,
+      borderRadius: 16,
       width: '100%',
+      marginVertical: 10
     },
     infoContainer: {
       padding: 16,
@@ -46,15 +48,12 @@ const styles = StyleSheet.create({
       // width: '50%'
     },
     nameDescription: {
-      fontSize: 20,
-      fontWeight: 'bold',
-      paddingHorizontal: 8,
-      paddingVertical: 6,
+      fontSize: 16,
+      marginLeft: 10,
       alignSelf: 'flex-start',
-      marginHorizontal: 25,
-      marginBottom: 6,
-      // minWidth: '48%',
-      textAlign: 'center',
+    },
+    divider: {
+      marginLeft: 10,
     },
     nameValue: {
       fontSize: 20,
@@ -111,6 +110,21 @@ const styles = StyleSheet.create({
         lineHeight: 25,
         color: 'black',
         fontWeight: 'bold',
+      },
+      searchCont: {
+        position: 'absolute',
+        marginBottom: 70,
+        left: '20%',
+        zIndex: 1,
+        marginTop: 10,
+      },
+      searchfield: {
+        height: 40,
+        borderWidth: 1,
+        borderColor: '#000',
+        textAlign: 'center',
+        width: 250,
+        borderRadius: 16,
       },
   });
 

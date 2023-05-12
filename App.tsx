@@ -29,8 +29,8 @@ export default function App() {
       <Stack.Screen name="  " component={Pokemons} options={{ 
       headerLeft: (props) => ( // App Logo
       <Image
-        style={{ width: 200, height: 40 }}
-        source={require('./Components/assets/pokemonLogo.png')}
+        style={{ width: 100, height: 40 }}
+        source={require('./Components/assets/catLogo.png')}
         resizeMode='contain'
       />
     ),
